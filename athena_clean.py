@@ -5,7 +5,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
-img = "/Users/calebginorio/Desktop/rtds.jpg"
+img = "rtds.jpg"
 st.image(img, width =600)
 
 # Streamlit app heading
@@ -17,7 +17,6 @@ st.markdown("""
  * Your plots and analysis will appear below
 """)
 
-
 st.divider()
 
 st.sidebar.header("TWA Input")
@@ -27,9 +26,9 @@ twa_8hr_limit = st.sidebar.number_input('Enter the 8-hour TWA limit (PPM):', min
 twa_10hr_limit = twa_8hr_limit * 0.7
 twa_12hr_limit = twa_8hr_limit * 0.5
 
-# Display the calculated TWA limits
 st.sidebar.write(f"10-hour TWA limit: {twa_10hr_limit:.2f} PPM")
 st.sidebar.write(f"12-hour TWA limit: {twa_12hr_limit:.2f} PPM")
+
 
 st.sidebar.header("Real-Time Detection Systems (RTDS) Volunteer Committee")
 st.sidebar.markdown(( """[Joins Us!](https://www.aiha.org/get-involved/volunteer-groups/real-time-detection-systems-committee)"""))
@@ -37,20 +36,18 @@ st.sidebar.markdown(( """[Joins Us!](https://www.aiha.org/get-involved/volunteer
 
 st.sidebar.markdown(("""[Donate](https://www.aiha.org/get-involved/aih-foundation/aih-foundation-scholarships/real-time-detection-systems-scholarship) today to the RTDS Scholarship!"""))
 
-
-# Function to calculate rolling TWA
+# rolling TWA
 def calculate_rolling_twa(df, column, window_hours):
-    window_seconds = window_hours * 3600  # Convert hours to seconds
-    df[f'RollingTWA_{window_hours}hr'] = df[column].rolling(window=window_seconds, min_periods=1).mean()
+    window_minutes = window_hours * 60  # Convert hours to minutes
+    df[f'RollingTWA_{window_hours}hr'] = df[column].rolling(window=window_minutes, min_periods=1).mean()
     return df
 
-# to upload a file
+# upload a file
 uploaded_file = st.file_uploader("Choose a file")
 
 if uploaded_file is not None:
     # to read the file
     df = pd.read_excel(uploaded_file)
-
 
     # to convert 'Value' column to PPM
     df["PPM"] = df["Value"] * 10000
@@ -58,7 +55,6 @@ if uploaded_file is not None:
     # histogram of PPM values
     fig_histogram = px.histogram(df, x="PPM", nbins=50, title= "Distribution of CO<sub>2</sub> Concentration")
 
-    # Add x-axis and y-axis titles
     fig_histogram.update_xaxes(title_text=' CO<sub>2</sub> Concentration (PPM)')
     fig_histogram.update_yaxes(title_text='Frequency')
     st.plotly_chart(fig_histogram)
@@ -67,7 +63,6 @@ if uploaded_file is not None:
     missing_values_count = df["PPM"].isna().sum()
     total_values_count = df.shape[0]
     missing_percentage = (missing_values_count / total_values_count) * 100
-
 
      # to check for values under 400 PPM
     count_under_400 = df[df["PPM"] < 400].shape[0]
@@ -83,14 +78,14 @@ if uploaded_file is not None:
     else:
         st.success("No negative readings detected.")
 
-    # to check for percentage of values <= 0.01
+    # to check for percentage of values <= 100 PPM
     low_value_percentage = (df[df["PPM"] <= 100].shape[0] / df.shape[0]) * 100
     if low_value_percentage > 0:
         st.warning(f"Warning: {low_value_percentage:.2f}% of readings are below 100 PPM.")
     else:
         st.success("No readings are below 100 PPM.")
 
-    # Display the percentage of missing values if any
+    # Percentage of missing values if any
     if missing_values_count > 0:
         st.warning(f"Warning: There are missing values in the concentration column ({missing_percentage:.2f}% of total readings).")
 
@@ -100,7 +95,7 @@ if uploaded_file is not None:
             ("Remove rows with missing values", "Replace with mean", "Replace with median")
         )
 
-        # Handle missing values based on user selection
+        # Handling if missing values based on user selection
         if missing_value_option == "Remove rows with missing values":
             df = df.dropna(subset=["PPM"])
             st.success("Rows with missing values have been removed.")
@@ -134,8 +129,6 @@ if uploaded_file is not None:
     fig.add_trace(go.Scatter(x=df["ReadTime"], y=df["RollingTWA_10hr"], name="10-Hr Rolling TWA", mode='lines', line=dict(color='blue', width = 2)))
     fig.add_trace(go.Scatter(x=df["ReadTime"], y=df["RollingTWA_12hr"], name="12-Hr Rolling TWA", mode='lines', line=dict(color='purple', width =2)))
 
-
-    # Add TWA limit lines
     fig.add_hline(y=twa_8hr_limit, line_dash="dash", line_color="red", annotation_text='8hr TWA Limit')
     fig.add_hline(y=twa_10hr_limit, line_dash="dash", line_color="blue", annotation_text='10hr TWA Limit')
     fig.add_hline(y=twa_12hr_limit, line_dash="dash", line_color="purple", annotation_text='12hr TWA Limit')
