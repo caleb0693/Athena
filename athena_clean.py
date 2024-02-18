@@ -148,7 +148,6 @@ if uploaded_file is not None:
         "12hr TWA": np.any(df["RollingTWA_12hr"] > twa_12hr_limit),
     }
 
-    # Create three columns for the metrics
     col1, col2, col3 = st.columns(3)
 
     
