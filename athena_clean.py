@@ -45,6 +45,8 @@ def calculate_rolling_twa(df, column, window_hours):
 # upload a file
 uploaded_file = st.file_uploader("Choose a file")
 
+st.divider()
+
 if uploaded_file is not None:
     # to read the file
     df = pd.read_excel(uploaded_file)
@@ -52,6 +54,7 @@ if uploaded_file is not None:
     # to convert 'Value' column to PPM
     df["PPM"] = df["Value"] * 10000
 
+    st.divider()
     # histogram of PPM values
     fig_histogram = px.histogram(df, x="PPM", nbins=50, title= "Distribution of CO<sub>2</sub> Concentration")
 
