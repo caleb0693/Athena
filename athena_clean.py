@@ -25,7 +25,7 @@ with st.expander("Click to Expand"):
 
     with tab2:
         st.markdown("""
-                - As the amount of data collected by direct-reading instruments grows, it becomes difficult to manage. Many OEHS professionals are still comparing averages in spreadsheets directly to exposure limits. We know we need to do better, but doing better is difficult. It’s especially in situations where resources are scarce.
+                - As the amount of data collected by direct-reading instruments grows, it becomes difficult to manage. Many OEHS professionals are still comparing averages in spreadsheets directly to exposure limits. We know we need to do better, but doing better is difficult. It’s especially challenging in situations where resources are scarce.
                 - It also takes years to build enough experience to be able to analyze data at a level needed to use all of our best practices. Instead of training everyone to get really good at data analysis, we’re making it easier to do by building consensus on how it should be done. Athena is composed of those rules.
                 - We’ve done this before. The Brief and Scala (1986) model used in Athena is more accessible than more complex processes to adjust exposure limits for extended shifts. Sometimes a simple and easy to get answer is better than a precise answer that is beyond reach, or there’s just too much data to analyze.""")
         
