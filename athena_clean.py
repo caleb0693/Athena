@@ -308,7 +308,7 @@ if df is not None and not df.empty:
             fig_hist.update_layout(bargap=0.1)
             st.plotly_chart(fig_hist)
 
-            # Generate Q-Q plots
+            # Q-Q plots
             norm_quantiles = np.linspace(0, 1, num=len(log_data))
             data_quantiles = np.quantile(log_data, norm_quantiles)
             theoretical_quantiles = stats.norm.ppf(norm_quantiles, np.mean(log_data), np.std(log_data))
