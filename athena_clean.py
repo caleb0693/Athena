@@ -41,7 +41,7 @@ mw_df.set_index('ChemicalName', inplace=True)
 st.divider()
 
 with st.sidebar:
-    st.header("Exposure Limits")
+    st.header("Limit Values")
 
     st.subheader("Time-Weighted Average (TWA)",
                   help= "The TWA concentration for a conventional 8-hour workday and a 40-hour workweek,to which it is believed that nearly all workers may be repeatedly exposed, day after day, for a working lifetime without adverse effect.")
@@ -294,46 +294,46 @@ if df is not None and not df.empty:
 
     st.divider()
 
-    st.subheader("Log-Normality Test", help = "Some analysis assumes that occupational exposures are lognormal. This process tests to see if the data you uploaded looks lognormal, as far as we can tell. If your data isn’t lognormal, the Bayesian analysis may not work as intended. If your data contains non-positive values, this part won’t work (for math reasons, not programming problems).")
+#    st.subheader("Log-Normality Test", help = "Some analysis assumes that occupational exposures are lognormal. This process tests to see if the data you uploaded looks lognormal, as far as we can tell. If your data isn’t lognormal, the Bayesian analysis may not work as intended. If your data contains non-positive values, this part won’t work (for math reasons, not programming problems).")
 
-    if st.checkbox('Check if data is log-normally distributed'):
+#    if st.checkbox('Check if data is log-normally distributed'):
         # ensure data is positive since log transformation requires positive values
-        if (df['converted'] <= 0).any():
-            st.error("Data contains non-positive values which cannot be log-transformed.")
-        else:
-            log_data = np.log(df['converted'])
+#        if (df['converted'] <= 0).any():
+#            st.error("Data contains non-positive values which cannot be log-transformed.")
+#        else:
+#            log_data = np.log(df['converted'])
 
-            # histogram of the log-transformed data
-            fig_hist = px.histogram(log_data, nbins=30, title="Log-Transformed Data Histogram")
-            fig_hist.update_layout(bargap=0.1)
-            st.plotly_chart(fig_hist)
+#            # histogram of the log-transformed data
+#            fig_hist = px.histogram(log_data, nbins=30, title="Log-Transformed Data Histogram")
+#            fig_hist.update_layout(bargap=0.1)
+#            st.plotly_chart(fig_hist)
 
-            # Q-Q plots
-            norm_quantiles = np.linspace(0, 1, num=len(log_data))
-            data_quantiles = np.quantile(log_data, norm_quantiles)
-            theoretical_quantiles = stats.norm.ppf(norm_quantiles, np.mean(log_data), np.std(log_data))
+#            # Q-Q plots
+#            norm_quantiles = np.linspace(0, 1, num=len(log_data))
+#            data_quantiles = np.quantile(log_data, norm_quantiles)
+#            theoretical_quantiles = stats.norm.ppf(norm_quantiles, np.mean(log_data), np.std(log_data))
 
-            qq_fig = go.Figure()
-            qq_fig.add_trace(go.Scatter(x=theoretical_quantiles, y=data_quantiles, mode='markers',
-                                        name='Data Quantiles'))
-            qq_fig.add_trace(go.Scatter(x=theoretical_quantiles, y=theoretical_quantiles, mode='lines',
-                                        name='Theoretical Quantiles'))
-            qq_fig.update_layout(title="Q-Q Plot of Log-Transformed Data",
-                                xaxis_title='Theoretical Quantiles',
-                                yaxis_title='Sample Quantiles')
-            st.plotly_chart(qq_fig)
+#            qq_fig = go.Figure()
+#            qq_fig.add_trace(go.Scatter(x=theoretical_quantiles, y=data_quantiles, mode='markers',
+#                                        name='Data Quantiles'))
+#            qq_fig.add_trace(go.Scatter(x=theoretical_quantiles, y=theoretical_quantiles, mode='lines',
+#                                        name='Theoretical Quantiles'))
+#            qq_fig.update_layout(title="Q-Q Plot of Log-Transformed Data",
+#                                xaxis_title='Theoretical Quantiles',
+#                                yaxis_title='Sample Quantiles')
+#            st.plotly_chart(qq_fig)
 
-            # normality test (Shapiro-Wilk test)
-            stat, p_value = stats.shapiro(log_data)
-            st.write("Shapiro-Wilk Test Results:")
-            st.write("Statistic:", stat, "P-value:", p_value)
+#            # normality test (Shapiro-Wilk test)
+#            stat, p_value = stats.shapiro(log_data)
+#            st.write("Shapiro-Wilk Test Results:")
+#            st.write("Statistic:", stat, "P-value:", p_value)
 
-            # interpretation
-            alpha = 0.05  # significance level
-            if p_value > alpha:
-                st.success('Data looks log-normal (fail to reject H0 at alpha = 0.05)')
-            else:
-                st.error('Data does not look log-normal (reject H0 at alpha = 0.05)')
+#            # interpretation
+#            alpha = 0.05  # significance level
+#            if p_value > alpha:
+#                st.success('Data looks log-normal (fail to reject H0 at alpha = 0.05)')
+#            else:
+#                st.error('Data does not look log-normal (reject H0 at alpha = 0.05)')
 
 
 st.sidebar.divider()
