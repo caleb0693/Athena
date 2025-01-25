@@ -12,7 +12,7 @@ import scipy.stats as stats
 
 st.image("rtds.jpg", width =700)
 
-st.title("Athena Algorithm", help = "What is Athena? Athena is a set of data processing rules. Imagine it like a large flow chart full of math. If you have time-series data, like a data log, Athena helps you process it into a simple OKAY or NOT OKAY output. You only have to supply the exposure limit(s) and the units of measure.")
+st.title("Athena Algorithm Test", help = "What is Athena? Athena is a set of data processing rules. Imagine it like a large flow chart full of math. If you have time-series data, like a data log, Athena helps you process it into a simple OKAY or NOT OKAY output. You only have to supply the exposure limit(s) and the units of measure.")
 st.markdown((""" Created by [Caleb Ginorio](https://www.linkedin.com/in/caleb-ginorio-58b243b4/), [Steve Jahn](https://www.linkedin.com/in/steven-jahn-mba-cih-faiha-85a04871/) & [Spencer Pizzani](https://www.linkedin.com/in/spencer-pizzani-cih-232a7518/)"""))
 
 st.subheader("Why should I use Athena?")
