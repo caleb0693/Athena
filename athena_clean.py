@@ -484,4 +484,4 @@ st.sidebar.markdown(( """[Join Us!](https://www.aiha.org/get-involved/volunteer-
 st.sidebar.markdown(("""[Donate](https://www.aiha.org/get-involved/aih-foundation/aih-foundation-scholarships/real-time-detection-systems-scholarship) today to the RTDS Scholarship!"""))
 
 st.sidebar.divider()
-st.sidebar.image("picture1.png")
+st.sidebar.image("Picture1.png")
