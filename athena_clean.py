@@ -376,12 +376,12 @@ if df is not None and not df.empty:
         lcl = df[lcl_col].dropna().round(2)
 
         if (lcl > limit).any():
-            return label, "A – Noncompliance Exposure", "Certain Fail", ":thumbsdown:", "red"
+            return label, "A – Noncompliance Exposure", "Certain Fail", "👎", "red"
 
         if (ucl < limit).all():
-            return label, "C – Compliance Exposure", "Sufficiently Certain", ":thumbsup:", "green"
+            return label, "C – Compliance Exposure", "Sufficiently Certain", "👍", "green"
 
-        return label, "B – Possible Overexposure", "Insufficiently Certain", ":thumbsdown:", "orange"
+        return label, "B – Possible Overexposure", "Insufficiently Certain", "👎", "orange"
 
     results = []
     results.append(evaluate_leidel("RollingTWA_8hr", "UCL_8hr", "LCL_8hr", twa_8hr_limit, "8-hour TWA"))
@@ -393,9 +393,9 @@ if df is not None and not df.empty:
 
     if use_ceiling and ceiling_limit:
         if (df['converted'] > ceiling_limit).any():
-            results.append(("Ceiling", "A – Ceiling Exceeded", "One or more values exceeded the ceiling limit", ":thumbsdown:", "red"))
+            results.append(("Ceiling", "A – Ceiling Exceeded", "One or more values exceeded the ceiling limit", "👎", "red"))
         else:
-            results.append(("Ceiling", "C – Ceiling Not Exceeded", "All values remained below the ceiling limit", ":thumbsup:", "green"))
+            results.append(("Ceiling", "C – Ceiling Not Exceeded", "All values remained below the ceiling limit", "👍", "green"))
 
 
     st.subheader("Analysis Outcome", help="Classified using Leidel-style logic based on rolling confidence intervals.")
