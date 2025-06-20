@@ -345,7 +345,7 @@ if df is not None and not df.empty:
     fig2.add_hline(y=twa_12hr_limit, line_dash="dash", line_color="red", annotation_text="12-Hr Limit")
 
     fig2.update_layout(
-        title='Rolling TWAs with Confidence Intervals vs Exposure Limits',
+        title='Moving TWAs with Confidence Intervals vs Exposure Limits',
         xaxis_title='Time',
         yaxis_title=f'Concentration ({unit_display})',
         legend_title='Legend'
